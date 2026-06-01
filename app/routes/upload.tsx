@@ -6,7 +6,7 @@ import { usePuterStore } from '~/lib/puter';
 import { useNavigate } from 'react-router';
 import { convertPdfToImage } from '~/lib/pdf2img';
 import { generateUUID } from '~/lib/utils';
-import { prepareInstructions } from 'constants';
+import { prepareInstructions, AIResponseFormat } from 'constants';
 
 const upload = () => {
     const {auth,isLoading,fs,ai,kv}= usePuterStore();
@@ -52,7 +52,7 @@ const upload = () => {
 
         const feedback = await ai.feedback(
             uploadedFile.path,
-            prepareInstructions({jobTitle,jobDescription})
+            prepareInstructions({jobTitle,jobDescription,AIResponseFormat})
         )
 
         if(!feedback) return setStatusText('Error: Failed to analyze resume.');
@@ -60,6 +60,9 @@ const upload = () => {
         const feedbackText = typeof feedback.message.content === 'string' 
         ? feedback.message.content
         : feedback.message.content[0].text;
+
+        console.log("RAW GPT RESPONSE:");
+        console.log(feedbackText);
 
         data.feedback = JSON.parse(feedbackText);
         await kv.set(`resume:${uuid}`,JSON.stringify(data));
