@@ -3,8 +3,9 @@ import { useLocation, useNavigate } from 'react-router';
 import { usePuterStore } from '~/lib/puter';
 
 export const meta = () => ([
-  { title: 'Resumind | Auth' },
-  { name: 'description', content: 'Login into your account' },
+  { title: 'Log In | EnhancResume – AI ATS Resume Checker' },
+  { name: 'description', content: 'Log in to your EnhancResume account to access your AI-powered ATS resume checker, resume scores, and improvement feedback.' },
+  { name: 'robots', content: 'noindex, nofollow' },
 ]);
 
 const Auth = () => {

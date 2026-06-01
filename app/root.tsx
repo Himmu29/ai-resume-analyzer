@@ -12,6 +12,28 @@ import "./app.css";
 import { usePuterStore } from "./lib/puter";
 import { useEffect } from "react";
 
+const SITE_URL = "https://enhancresume.com";
+const SITE_NAME = "EnhancResume";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/images/og-image.png`;
+
+/** WebSite JSON-LD — sitewide schema injected once in root */
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description:
+    "EnhancResume is an AI-powered ATS Resume Checker that helps job seekers improve their resumes, increase ATS compatibility, identify missing keywords, and get AI-powered feedback.",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/upload`,
+    },
+    "query-input": "required name=resume",
+  },
+};
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -21,7 +43,14 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+  },
+  // Preload background SVG to avoid LCP delay
+  {
+    rel: "preload",
+    href: "/images/bg-main.svg",
+    as: "image",
+    type: "image/svg+xml",
   },
 ];
 
@@ -30,15 +59,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     init();
-  }, [init])
-  
+  }, [init]);
+
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#606beb" />
+        {/* Default OG & Twitter fallbacks — overridden per-route via meta() */}
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={DEFAULT_OG_IMAGE} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="EnhancResume — AI-Powered ATS Resume Checker" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@enhancresume" />
+        <meta name="twitter:image" content={DEFAULT_OG_IMAGE} />
+        <meta name="twitter:image:alt" content="EnhancResume — AI-Powered ATS Resume Checker" />
+        {/* Robots default — overridden per-route */}
+        <meta name="robots" content="index, follow" />
         <Meta />
         <Links />
+        {/* WebSite JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
       </head>
       <body>
         <script src="https://js.puter.com/v2/"></script>

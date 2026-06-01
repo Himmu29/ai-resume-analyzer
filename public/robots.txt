@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /resume/
+Disallow: /wipe
+
+Sitemap: https://enhancresume.com/sitemap.xml

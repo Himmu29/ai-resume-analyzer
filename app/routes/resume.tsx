@@ -6,8 +6,10 @@ import Summary from '~/components/Summary';
 import { usePuterStore } from '~/lib/puter';
 
 export const meta = () => ([
-  { title: 'Resumind | Review' },
-  { name: 'description', content: 'Detailed overview of your resume' },
+  { title: 'Resume Analysis Results | EnhancResume' },
+  { name: 'description', content: 'View your AI-powered ATS resume analysis, compatibility score, keyword feedback, and personalized improvement suggestions from EnhancResume.' },
+  // Private user-specific page — must not be indexed
+  { name: 'robots', content: 'noindex, nofollow' },
 ]);
 
 const Resume = () => {
