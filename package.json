@@ -3,12 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npx react-router build",
+    "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@react-router/dev": "^7.7.1",
     "@react-router/node": "^7.7.1",
     "@react-router/serve": "^7.7.1",
     "clsx": "^2.1.1",
@@ -22,7 +23,6 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.7.1",
     "@tailwindcss/vite": "^4.1.4",
     "@types/node": "^20",
     "@types/react": "^19.1.2",
